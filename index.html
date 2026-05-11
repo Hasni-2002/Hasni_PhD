@@ -64,18 +64,32 @@
     .hero-video {
       position: fixed;
       inset: 0;
-      z-index: -4;
+      z-index: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
       opacity: 0.4;
+      pointer-events: none;
     }
     .hero-fade {
       position: fixed;
       inset: 0;
-      z-index: -1;
+      z-index: 1;
       background: linear-gradient(180deg, oklch(0.16 0.012 180 / 0.4), oklch(0.16 0.012 180 / 0.6) 60%, oklch(0.16 0.012 180));
       pointer-events: none;
+    }
+    .media-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      background: var(--gradient-hero);
+      pointer-events: none;
+    }
+    header,
+    main,
+    footer {
+      position: relative;
+      z-index: 5;
     }
     .nav-wrap {
       position: fixed;
@@ -169,6 +183,16 @@
     .ring { position: absolute; inset: 0; border: 1px solid oklch(0.74 0.17 158 / 0.3); border-radius: 50%; animation: spin 38s linear infinite; }
     .ring::before, .ring::after { content: ""; position: absolute; inset: 22px; border-radius: 50%; border: 1px solid oklch(0.72 0.2 50 / 0.2); }
     .ring::after { inset: 56px; border-style: dashed; border-color: oklch(0.82 0.15 88 / 0.3); }
+    .blade-field { position: absolute; inset: 72px; border-radius: 50%; animation: spin 12s linear infinite; }
+    .blade {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 2px;
+      height: 44%;
+      transform-origin: bottom center;
+      background: linear-gradient(180deg, transparent, oklch(0.74 0.17 158 / 0.45), transparent);
+    }
     .portrait { position: absolute; inset: 72px; overflow: hidden; border: 2px solid oklch(0.74 0.17 158 / 0.6); border-radius: 50%; box-shadow: inset 0 0 120px oklch(0.74 0.17 158 / 0.45), 0 0 80px oklch(0.82 0.15 88 / 0.25); }
     .portrait video { width: 100%; height: 100%; object-fit: cover; }
     .float-card {
@@ -316,6 +340,26 @@
       height: 100%;
       object-fit: cover;
     }
+    .cert-proof-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .cert-proof-grid a {
+      display: block;
+      overflow: hidden;
+      border: 1px solid oklch(0.74 0.17 158 / 0.35);
+      border-radius: 16px;
+      background: oklch(0.97 0.008 90 / 0.04);
+      box-shadow: 0 0 26px oklch(0.74 0.17 158 / 0.10);
+    }
+    .cert-proof-grid img {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+    }
     footer { border-top: 1px solid oklch(0.97 0.008 90 / 0.06); padding: 32px 18px; color: var(--muted); font-size: 0.85rem; }
     .footer-inner { width: min(1180px, 100%); margin: 0 auto; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 
@@ -334,7 +378,7 @@
       .hero { padding-top: 118px; }
       .brand span:last-child { display: none; }
       .float-card { position: static; width: auto; margin-top: 12px; }
-      .award-images, .stat-grid, .metric-grid { grid-template-columns: 1fr; }
+      .award-images, .cert-proof-grid, .stat-grid, .metric-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -343,6 +387,7 @@
     <source src="lovable-assets/media/hero.mp4" type="video/mp4" />
   </video>
   <div class="hero-fade"></div>
+  <div class="media-bg"></div>
 
   <header class="nav-wrap">
     <div class="nav">
@@ -371,6 +416,7 @@
       </div>
       <div class="turbine" aria-label="Animated engineering visual">
         <div class="ring"></div>
+        <div class="blade-field" id="blades"></div>
         <div class="portrait"><video autoplay muted loop playsinline><source src="lovable-assets/media/hero.mp4" type="video/mp4" /></video></div>
         <div class="float-card float-1"><small>Gold Category</small><strong>Best Paper Presentation</strong><span>IMEC 2026 - EU-Funded</span></div>
         <div class="float-card float-2"><small>Springer Nature</small><strong>Novel Twin Turbojet</strong><span>12,000N thrust - Mach 1.8</span></div>
@@ -474,6 +520,11 @@
         <article class="card"><h3>GenAI, ML & RAG Training</h3><p>Aspire x Pak Angels Silicon Valley</p></article>
         <article class="card"><h3>Laser Powder Bed Fusion</h3><p>JEOL Innovative Solutions</p></article>
       </div>
+      <div class="cert-proof-grid" aria-label="Certificate and award proof images">
+        <a href="lovable-assets/awards/imec15-gold.jpeg"><img src="lovable-assets/awards/imec15-gold.jpeg" alt="Gold category certificate preview" /></a>
+        <a href="lovable-assets/awards/imec14.jpeg"><img src="lovable-assets/awards/imec14.jpeg" alt="IMEC certificate preview" /></a>
+        <a href="lovable-assets/awards/accolades.jpeg"><img src="lovable-assets/awards/accolades.jpeg" alt="Accolades certificate preview" /></a>
+      </div>
       <div class="viewer-actions"><button class="btn" type="button" data-cert-viewer>View Certifications</button></div>
     </section>
 
@@ -552,6 +603,25 @@
       rotationIndex = (rotationIndex + 1) % rotations.length;
       rotationEl.textContent = rotations[rotationIndex];
     }, 2600);
+
+    const blades = document.getElementById("blades");
+    if (blades) {
+      for (let i = 0; i < 12; i += 1) {
+        const blade = document.createElement("span");
+        blade.className = "blade";
+        blade.style.transform = `translate(-50%, -100%) rotate(${i * 30}deg)`;
+        blades.appendChild(blade);
+      }
+    }
+
+    document.querySelectorAll("video").forEach((video) => {
+      video.muted = true;
+      video.playsInline = true;
+      const playAttempt = video.play();
+      if (playAttempt && typeof playAttempt.catch === "function") {
+        playAttempt.catch(() => {});
+      }
+    });
 
     const modal = document.getElementById("assetModal");
     const modalTitle = document.getElementById("assetTitle");
