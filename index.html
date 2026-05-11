@@ -46,7 +46,7 @@
     p { color: var(--muted); line-height: 1.75; }
     h1, h2, h3, p { margin-top: 0; }
     h1, h2, h3 { letter-spacing: 0; }
-    h1 { margin-bottom: 24px; font-size: clamp(3.3rem, 8vw, 7rem); line-height: 0.93; }
+    h1 { margin-bottom: 24px; font-size: clamp(3.25rem, 7vw, 6.1rem); line-height: 0.96; }
     h2 { max-width: 850px; margin-bottom: 18px; font-size: clamp(2rem, 5vw, 4.4rem); line-height: 1; }
     h3 { margin-bottom: 8px; font-size: 1.2rem; line-height: 1.25; }
     sub { font-size: 0.7em; line-height: 0; vertical-align: sub; }
@@ -242,17 +242,32 @@
     @media (max-width: 920px) {
       .nav-links { display: none; }
       .hero, .two, .three, .four, .experience-row { grid-template-columns: 1fr; }
+      .hero-copy { text-align: center; margin: 0 auto; }
+      .rotating-line, .actions { justify-content: center; }
       .exp-title, .experience-row:nth-child(even) .exp-title { text-align: left; order: initial; }
       .experience-row:nth-child(even) .exp-card { order: initial; }
       .timeline::before { display: none; }
       .asset-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
+      h1 { font-size: clamp(3.25rem, 16vw, 5rem); }
+      h2 { font-size: 2.15rem; line-height: 1.08; }
+      .nav-wrap { padding: 12px 12px 0; }
+      .nav { gap: 12px; padding: 10px 12px; }
+      .nav .btn { min-height: 36px; padding: 0 12px; font-size: 0.78rem; }
       .section { width: min(100% - 28px, 1180px); padding: 76px 0; }
-      .hero { padding-top: 118px; }
+      .hero { gap: 40px; padding-top: 112px; padding-bottom: 48px; }
       .brand span:last-child { display: none; }
-      .turbine { margin-top: 0; }
+      .lead { font-size: 1rem; line-height: 1.7; }
+      .actions { display: grid; grid-template-columns: 1fr 1fr; }
+      .actions .btn { width: 100%; padding: 0 12px; font-size: 0.82rem; }
+      .turbine { width: min(320px, 100%); margin-top: 0; }
+      .portrait { inset: 44px; }
       .float-card { position: static; width: auto; margin-top: 12px; }
+      .card, .award-main { padding: 20px; border-radius: 20px; }
+      .asset-actions { align-items: flex-start; }
+      .mini-actions { width: 100%; }
+      .mini-actions a { flex: 1; text-align: center; }
     }
   </style>
 </head>
