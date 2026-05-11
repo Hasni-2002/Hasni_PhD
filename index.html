@@ -85,9 +85,7 @@
       background: var(--gradient-hero);
       pointer-events: none;
     }
-    header,
-    main,
-    footer {
+    header, main, footer {
       position: relative;
       z-index: 5;
     }
@@ -217,7 +215,11 @@
     .two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    .five-layout { grid-template-columns: 3fr 2fr; gap: 28px; }
+    .five-layout { 
+      grid-template-columns: 3fr 2fr; 
+      gap: 28px; 
+      align-items: stretch; /* Aligns grid items to same height */
+    }
     .card {
       border: 1px solid var(--line);
       border-radius: 24px;
@@ -248,7 +250,9 @@
     .award-main {
       position: relative;
       overflow: hidden;
-      display: grid;
+      display: flex; /* Changed from grid to flex for height management */
+      flex-direction: column;
+      height: 100%; /* Ensures card takes full height of grid row */
       gap: 22px;
       border: 1px solid oklch(0.82 0.15 88 / 0.58);
       background: radial-gradient(760px 320px at 50% 0%, oklch(0.82 0.15 88 / 0.22), transparent 62%), linear-gradient(135deg, oklch(0.2 0.02 80 / 0.74), oklch(0.18 0.018 90 / 0.58));
@@ -275,7 +279,7 @@
       opacity: 0.34;
       pointer-events: none;
     }
-    .award-copy { position: relative; z-index: 1; }
+    .award-copy { position: relative; z-index: 1; flex-grow: 1; }
     .award-images {
       position: relative;
       z-index: 1;
@@ -300,7 +304,6 @@
     .asset-panel img { width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); }
     .asset-panel ul { margin: 0; padding-left: 20px; color: var(--muted); line-height: 1.9; }
 
-    /* Final requested refinements: symmetric gold award card and stronger glow. */
     #awards .award-main {
       padding: 30px;
       gap: 20px;
@@ -317,49 +320,15 @@
       border-radius: 18px;
       border-color: oklch(0.82 0.15 88 / 0.42);
     }
-    #awards .award-copy {
-      padding: 0;
-      margin: 0;
-    }
-    #awards .award-copy p:last-of-type {
-      margin-bottom: 0;
-    }
-    #awards .award-images {
-      gap: 14px;
-      margin: 0;
-      padding: 0;
-      align-items: stretch;
-    }
-    #awards .award-images a {
-      aspect-ratio: 4 / 3;
-      border-color: oklch(0.82 0.15 88 / 0.42);
-      box-shadow: 0 0 28px oklch(0.82 0.15 88 / 0.12);
-    }
-    #awards .award-images img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .cert-proof-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 18px;
-    }
-    .cert-proof-grid a {
-      display: block;
-      overflow: hidden;
-      border: 1px solid oklch(0.74 0.17 158 / 0.35);
-      border-radius: 16px;
-      background: oklch(0.97 0.008 90 / 0.04);
-      box-shadow: 0 0 26px oklch(0.74 0.17 158 / 0.10);
-    }
-    .cert-proof-grid img {
-      width: 100%;
-      height: 100%;
-      aspect-ratio: 4 / 3;
-      object-fit: cover;
-    }
+    #awards .award-copy { padding: 0; margin: 0; }
+    #awards .award-copy p:last-of-type { margin-bottom: 0; }
+    #awards .award-images { gap: 14px; margin: 0; padding: 0; align-items: stretch; }
+    #awards .award-images a { aspect-ratio: 4 / 3; border-color: oklch(0.82 0.15 88 / 0.42); box-shadow: 0 0 28px oklch(0.82 0.15 88 / 0.12); }
+    #awards .award-images img { width: 100%; height: 100%; object-fit: cover; }
+    
+    .cert-proof-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 18px; }
+    .cert-proof-grid a { display: block; overflow: hidden; border: 1px solid oklch(0.74 0.17 158 / 0.35); border-radius: 16px; background: oklch(0.97 0.008 90 / 0.04); box-shadow: 0 0 26px oklch(0.74 0.17 158 / 0.10); }
+    .cert-proof-grid img { width: 100%; height: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
     footer { border-top: 1px solid oklch(0.97 0.008 90 / 0.06); padding: 32px 18px; color: var(--muted); font-size: 0.85rem; }
     .footer-inner { width: min(1180px, 100%); margin: 0 auto; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 
@@ -603,7 +572,6 @@
       rotationIndex = (rotationIndex + 1) % rotations.length;
       rotationEl.textContent = rotations[rotationIndex];
     }, 2600);
-
     const blades = document.getElementById("blades");
     if (blades) {
       for (let i = 0; i < 12; i += 1) {
@@ -622,7 +590,6 @@
         playAttempt.catch(() => {});
       }
     });
-
     const modal = document.getElementById("assetModal");
     const modalTitle = document.getElementById("assetTitle");
     const modalBody = document.getElementById("assetBody");
@@ -640,7 +607,6 @@
     document.getElementById("closeAsset").addEventListener("click", closeAssetViewer);
     modal.addEventListener("click", (event) => { if (event.target === modal) closeAssetViewer(); });
     document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeAssetViewer(); });
-
     document.querySelectorAll("[data-cv]").forEach((link) => {
       link.addEventListener("click", (event) => {
         event.preventDefault();
@@ -648,7 +614,6 @@
         openAssetViewer("Academic CV", `<iframe src="${pdfSrc}" title="Academic CV" style="width:100%;height:min(76svh,760px);border:1px solid var(--line);border-radius:14px;background:white"></iframe><div class="viewer-actions"><a class="btn primary" href="${pdfSrc}" download>Download CV</a></div>`);
       });
     });
-
     const awardLinks = Array.from(document.querySelectorAll(".award-images a"));
     const awardTitles = ["IMEC 2026 Gold Category Award", "14th IMEC Certificate", "International Conference Accolades"];
     document.querySelectorAll("[data-award-viewer], .award-images a").forEach((item) => {
@@ -659,14 +624,12 @@
         openAssetViewer(awardTitles[index], `<img src="${imageSrc}" alt="${awardTitles[index]}" /><div class="viewer-actions"><a class="btn primary" href="${imageSrc}" download>Download Image</a></div>`);
       });
     });
-
     document.querySelector("[data-cert-viewer]").addEventListener("click", () => {
       const items = Array.from(document.querySelectorAll(".cert-grid .card")).map((card) => {
         return `<li><strong>${card.querySelector("h3").textContent}</strong><br><span>${card.querySelector("p").textContent}</span></li>`;
       }).join("");
       openAssetViewer("Certifications", `<ul>${items}</ul>`);
     });
-
     document.getElementById("copyright").textContent = `Copyright ${new Date().getFullYear()} Abdullah Hasni - Sustainable Engineering & Research Portfolio`;
     document.getElementById("contactForm").addEventListener("submit", (event) => {
       event.preventDefault();
