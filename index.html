@@ -275,6 +275,47 @@
     .asset-panel-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
     .asset-panel img { width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--line); }
     .asset-panel ul { margin: 0; padding-left: 20px; color: var(--muted); line-height: 1.9; }
+
+    /* Final requested refinements: symmetric gold award card and stronger glow. */
+    #awards .award-main {
+      padding: 30px;
+      gap: 20px;
+      border: 1.5px solid oklch(0.82 0.15 88 / 0.72);
+      border-radius: 24px;
+      box-shadow:
+        0 0 92px oklch(0.82 0.15 88 / 0.45),
+        inset 0 0 0 1px oklch(0.82 0.15 88 / 0.18),
+        inset 0 0 72px oklch(0.82 0.15 88 / 0.10),
+        var(--shadow);
+    }
+    #awards .award-main::before {
+      inset: 14px;
+      border-radius: 18px;
+      border-color: oklch(0.82 0.15 88 / 0.42);
+    }
+    #awards .award-copy {
+      padding: 0;
+      margin: 0;
+    }
+    #awards .award-copy p:last-of-type {
+      margin-bottom: 0;
+    }
+    #awards .award-images {
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      align-items: stretch;
+    }
+    #awards .award-images a {
+      aspect-ratio: 4 / 3;
+      border-color: oklch(0.82 0.15 88 / 0.42);
+      box-shadow: 0 0 28px oklch(0.82 0.15 88 / 0.12);
+    }
+    #awards .award-images img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
     footer { border-top: 1px solid oklch(0.97 0.008 90 / 0.06); padding: 32px 18px; color: var(--muted); font-size: 0.85rem; }
     .footer-inner { width: min(1180px, 100%); margin: 0 auto; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 
@@ -324,6 +365,7 @@
           <a class="btn primary" href="#research">Explore Research</a>
           <a class="btn" href="#research">Publications</a>
           <a class="btn" href="lovable-assets/cv/Abdullah-Hasni-CV.pdf" data-cv>View CV</a>
+          <a class="btn" href="https://www.linkedin.com/in/abdullah-hasni-19bb27295/" target="_blank" rel="noreferrer">LinkedIn</a>
           <a class="btn" href="#contact">Contact</a>
         </div>
       </div>
